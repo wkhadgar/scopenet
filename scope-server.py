@@ -2,6 +2,9 @@ import socket
 import json
 import threading
 
+HOST = '127.0.0.1'  # Endereço IP local
+PORT = 65432  # Porta do servidor
+
 target_ra = {"h": 0, "m": 0, "s": 0}
 target_dec = {"°": 0, "'": 0, "\"": 0}
 
@@ -22,6 +25,7 @@ def save_target_loc(goto_metadata: dict[str, str]):
     except ValueError:
         return -1
 
+    slewing = True
     return 0
 
 
@@ -76,9 +80,6 @@ def handle_connection(client: socket):
 
 
 if __name__ == "__main__":
-    HOST = '127.0.0.1'  # Endereço IP local
-    PORT = 65432
-
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, PORT))
     s.listen()
