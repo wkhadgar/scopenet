@@ -19,9 +19,9 @@ def send_command(command: dict) -> str:
             s.connect((HOST, PORT))
             s.sendall(json.dumps(command).encode())
             response = s.recv(1024)
-            return f"Comando enviado com sucesso\nResposta recebida: {response.decode()}"
+            return "Successfully sent command\n" + ("-" * 70) + "\n" + f"Response: {response.decode()}"
     except ConnectionRefusedError:
-        return "Não foi possível conectar com o telescópio."
+        return "Unable to connect with telescope.\n" + ("-" * 70) + "\n"
 
 
 # Exemplo de comandos
@@ -33,12 +33,12 @@ def on_track():
         "metadata": "NULL"
     })
 
-    response_label.config(text="-" * 70 + "\n" + response)
+    response_label.config(text=response)
 
 
 def on_goto():
     ra_value = f"{ra_hour.get()}h {ra_minute.get()}m {ra_second.get()}s"
-    dec_value = f"{dec_degree.get()}d {dec_minute.get()}m {dec_second.get()}s"
+    dec_value = f"{dec_degree.get()}° {dec_minute.get()}' {dec_second.get()}\""
     command = {
         "command": "GOTO",
         "metadata": {
@@ -48,7 +48,7 @@ def on_goto():
     }
     response = send_command(command)
 
-    response_label.config(text="-" * 70 + "\n" + response)
+    response_label.config(text=response)
 
 
 def on_dc():
@@ -57,7 +57,7 @@ def on_dc():
         "metadata": "NULL"
     })
 
-    response_label.config(text="-" * 70 + "\n" + response)
+    response_label.config(text=response)
 
 
 if __name__ == "__main__":
@@ -115,9 +115,9 @@ if __name__ == "__main__":
     dec_second_entry = ttk.Entry(frame_dec, width=5, textvariable=dec_second)
     dec_second_entry.grid(row=0, column=4, padx=(0, 5))
 
-    ttk.Label(frame_dec, text="d").grid(row=0, column=1, padx=(0, 5))
-    ttk.Label(frame_dec, text="m").grid(row=0, column=3, padx=(0, 5))
-    ttk.Label(frame_dec, text="s").grid(row=0, column=5)
+    ttk.Label(frame_dec, text="°").grid(row=0, column=1, padx=(0, 5))
+    ttk.Label(frame_dec, text="'").grid(row=0, column=3, padx=(0, 5))
+    ttk.Label(frame_dec, text="\"").grid(row=0, column=5)
 
     separator = ttk.Separator(root, orient='horizontal')
     separator.grid(row=3, column=0, columnspan=2, sticky='ew', padx=10)
