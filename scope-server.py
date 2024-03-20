@@ -83,7 +83,7 @@ def handle_connection(client: socket):
             if data:
                 # Decodifica os dados recebidos do cliente
                 command_json = json.loads(data)
-                print(f"[{addr[0]}:{addr[1]}]: {command_json['command']}")
+                print(f"[{addr[0]}: {command_json['command']}")
                 response = process_command(command_json)
 
                 if response == "DISCONNECT":
