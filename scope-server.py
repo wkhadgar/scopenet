@@ -1,3 +1,13 @@
+"""
+ :file: scope-server.py
+ :author: Paulo Santos (pauloxrms@gmail.com)
+ :brief: Servidor base, representando um observatório.
+ :version: 0.1
+ :date: 22-02-2024
+
+ :copyright: Copyright Paulo R. Santos (c) 2024
+"""
+
 import socket
 import json
 import threading
@@ -12,6 +22,12 @@ slewing = False
 
 
 def save_target_loc(goto_metadata: dict[str, str]):
+    """
+    Atualiza a posição alvo do telescópio.
+
+    :param goto_metadata: Dados obtidos pelo socket, representando a posição de destino.
+    :return: -1 em caso de erro, 0 caso contrário.
+    """
     ra_recv = goto_metadata['ra'].split(" ")
     dec_recv = goto_metadata['dec'].split(" ")
 
@@ -53,6 +69,11 @@ def process_command(command):
 
 
 def handle_connection(client: socket):
+    """
+    Thread que gerencia uma conexão socket com um client.
+
+    :param client: Cliente conectado.
+    """
     connected = True
     while connected:
         try:

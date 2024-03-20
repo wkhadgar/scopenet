@@ -1,3 +1,13 @@
+"""
+ :file: scope-client.py
+ :author: Paulo Santos (pauloxrms@gmail.com)
+ :brief: Cliente base, representando um controlador do observatório.
+ :version: 0.1
+ :date: 22-02-2024
+
+ :copyright: Copyright Paulo R. Santos (c) 2024
+"""
+
 import socket
 import json
 import threading
@@ -51,6 +61,9 @@ def on_dc():
 
 
 def message_manager():
+    """
+    Thread responsável pelo gerenciamento de mensagens a serem enviadas para o servidor.
+    """
     response = ("-" * 70) + "\n" + f"{s.recv(1024).decode()}"
     response_label.config(text=response)
     run = True
